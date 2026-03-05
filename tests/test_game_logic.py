@@ -89,3 +89,92 @@ def test_update_score_too_low():
     # Too Low always: -5 points
     new_score = update_score(100, "Too Low", 3)
     assert new_score == 95
+
+
+# ============================================================================
+# CHALLENGE 1: Advanced Edge-Case Testing
+# ============================================================================
+# These tests verify that the game handles tricky/boundary inputs gracefully
+# without crashing or producing unexpected results.
+
+def test_parse_guess_negative_number():
+    # Edge case: user enters a negative number
+    ok, value, err = parse_guess("-5")
+    assert ok is True
+    assert value == -5
+    assert err is None
+    # Note: Game logic should still work, even if negative doesn't match any range
+
+def test_parse_guess_very_large_number():
+    # Edge case: user enters a number way outside any game range
+    ok, value, err = parse_guess("999999")
+    assert ok is True
+    assert value == 999999
+    assert err is None
+
+def test_parse_guess_zero():
+    # Edge case: user enters zero
+    ok, value, err = parse_guess("0")
+    assert ok is True
+    assert value == 0
+    assert err is None
+
+def test_parse_guess_decimal_negative():
+    # Edge case: negative decimal (should truncate to negative int)
+    ok, value, err = parse_guess("-3.9")
+    assert ok is True
+    assert value == -3
+    assert err is None
+
+def test_parse_guess_special_characters():
+    # Edge case: special characters that aren't numbers
+    ok, value, err = parse_guess("@#$%")
+    assert ok is False
+    assert value is None
+    assert err == "That is not a number."
+
+def test_parse_guess_whitespace_only():
+    # Edge case: string with only whitespace
+    ok, value, err = parse_guess("   ")
+    assert ok is False
+    assert value is None
+    assert err == "That is not a number."
+
+def test_parse_guess_none():
+    # Edge case: None input
+    ok, value, err = parse_guess(None)
+    assert ok is False
+    assert value is None
+    assert err == "Enter a guess."
+
+def test_check_guess_negative_vs_positive():
+    # Edge case: negative guess against positive secret
+    result, message = check_guess(-10, 50)
+    assert result == "Too Low"
+    assert "HIGHER" in message
+
+def test_check_guess_boundary_easy():
+    # Edge case: guess at exact boundaries of Easy range
+    result, message = check_guess(1, 20)  # lowest boundary
+    assert result == "Too Low"
+    result, message = check_guess(20, 1)  # highest boundary
+    assert result == "Too High"
+
+def test_check_guess_boundary_hard():
+    # Edge case: guess at exact boundaries of Hard range
+    result, message = check_guess(1, 50)  # lowest boundary
+    assert result == "Too Low"
+    result, message = check_guess(50, 1)  # highest boundary
+    assert result == "Too High"
+
+def test_update_score_minimum_win():
+    # Edge case: win after max attempts (score should bottom out at 10)
+    new_score = update_score(0, "Win", 100)  # extremely late attempt
+    assert new_score >= 10  # score floor is 10
+
+def test_get_range_unknown_difficulty():
+    # Edge case: unknown difficulty string defaults to Normal
+    low, high = get_range_for_difficulty("Impossible")
+    assert low == 1
+    assert high == 100  # defaults to Normal
+

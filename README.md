@@ -41,29 +41,53 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📸 Demo
 
-**Pytest Results – All 15 Tests Passing:**
+**Pytest Results – All 27 Tests Passing (15 core + 12 edge-case tests):**
 ```
 ============================= test session starts ==============================
-collected 15 items
+collected 27 items
 
-tests/test_game_logic.py::test_winning_guess PASSED                      [  6%]
-tests/test_game_logic.py::test_guess_too_high PASSED                     [ 13%]
-tests/test_game_logic.py::test_guess_too_low PASSED                      [ 20%]
-tests/test_game_logic.py::test_parse_guess_valid PASSED                  [ 26%]
-tests/test_game_logic.py::test_parse_guess_decimal PASSED                [ 33%]
-tests/test_game_logic.py::test_parse_guess_invalid PASSED                [ 40%]
-tests/test_game_logic.py::test_parse_guess_empty PASSED                  [ 46%]
-tests/test_game_logic.py::test_get_range_easy PASSED                     [ 53%]
-tests/test_game_logic.py::test_get_range_normal PASSED                   [ 60%]
-tests/test_game_logic.py::test_get_range_hard PASSED                     [ 66%]
-tests/test_game_logic.py::test_update_score_win PASSED                   [ 73%]
-tests/test_game_logic.py::test_update_score_win_late PASSED              [ 80%]
-tests/test_game_logic.py::test_update_score_too_high_even PASSED         [ 86%]
-tests/test_game_logic.py::test_update_score_too_high_odd PASSED          [ 93%]
-tests/test_game_logic.py::test_update_score_too_low PASSED               [100%]
+tests/test_game_logic.py::test_winning_guess PASSED                      [  3%]
+tests/test_game_logic.py::test_guess_too_high PASSED                     [  7%]
+tests/test_game_logic.py::test_guess_too_low PASSED                      [ 11%]
+tests/test_game_logic.py::test_parse_guess_valid PASSED                  [ 14%]
+tests/test_game_logic.py::test_parse_guess_decimal PASSED                [ 18%]
+tests/test_game_logic.py::test_parse_guess_invalid PASSED                [ 22%]
+tests/test_game_logic.py::test_parse_guess_empty PASSED                  [ 25%]
+tests/test_game_logic.py::test_get_range_easy PASSED                     [ 29%]
+tests/test_game_logic.py::test_get_range_normal PASSED                   [ 33%]
+tests/test_game_logic.py::test_get_range_hard PASSED                     [ 37%]
+tests/test_game_logic.py::test_update_score_win PASSED                   [ 40%]
+tests/test_game_logic.py::test_update_score_win_late PASSED              [ 44%]
+tests/test_game_logic.py::test_update_score_too_high_even PASSED         [ 48%]
+tests/test_game_logic.py::test_update_score_too_high_odd PASSED          [ 51%]
+tests/test_game_logic.py::test_update_score_too_low PASSED               [ 55%]
+tests/test_game_logic.py::test_parse_guess_negative_number PASSED        [ 59%]
+tests/test_game_logic.py::test_parse_guess_very_large_number PASSED      [ 62%]
+tests/test_game_logic.py::test_parse_guess_zero PASSED                   [ 66%]
+tests/test_game_logic.py::test_parse_guess_decimal_negative PASSED       [ 70%]
+tests/test_game_logic.py::test_parse_guess_special_characters PASSED     [ 74%]
+tests/test_game_logic.py::test_parse_guess_whitespace_only PASSED        [ 77%]
+tests/test_game_logic.py::test_parse_guess_none PASSED                   [ 81%]
+tests/test_game_logic.py::test_check_guess_negative_vs_positive PASSED   [ 85%]
+tests/test_game_logic.py::test_check_guess_boundary_easy PASSED          [ 88%]
+tests/test_game_logic.py::test_check_guess_boundary_hard PASSED          [ 92%]
+tests/test_game_logic.py::test_update_score_minimum_win PASSED           [ 96%]
+tests/test_game_logic.py::test_get_range_unknown_difficulty PASSED       [100%]
 
-============================== 15 passed in 0.01s ==============================
+============================== 27 passed in 0.02s ==============================
 ```
+
+**Edge-Case Coverage (Challenge 1):**
+The test suite now includes 12 advanced edge-case tests verifying the game handles:
+- Negative numbers and zero
+- Very large numbers (999999+)
+- Boundary values (1, 20, 50, 100)
+- Decimal inputs (negative and positive)
+- Special characters and whitespace
+- None/null inputs
+- Unknown difficulty settings (defaults gracefully)
+
+All edge cases pass without crashes or unexpected behavior.
 
 ## 🚀 Stretch Features
 
